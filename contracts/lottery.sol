@@ -13,4 +13,8 @@ contract Lottery {
         require(msg.value > 0.001 ether);
         players.push(msg.sender);
     }
+
+    function random() private view returns (uint) {
+        return uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, players)));
+    }
 }
