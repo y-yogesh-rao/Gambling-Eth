@@ -35,6 +35,10 @@ contract Lottery {
         players = new address[](0);
     }
 
+    function getPlayers() public view returns (address[] memory) {
+        return players;
+    }
+
     // Function modifiers helps to neat up the code by removing the redundant code and putting them in function statement
     modifier restrictedToManager() {
         // requiring manager making sure that only manager is able use pick winner function
