@@ -24,10 +24,7 @@ contract Lottery {
         return uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, players)));
     }
 
-    function pickWinner() public {
-        // requiring manager making sure that only manager is able use pick winner function
-        require(msg.sender == manager);
-
+    function pickWinner() public restrictedToManager {
         // picking winner player's index
         uint choosenWinnerIndex = random() % players.length;
 
@@ -36,5 +33,12 @@ contract Lottery {
 
         // Resetting players array to empty array again so that we can reuse contract without deploying it again
         players = new address[](0);
+    }
+
+    // Function modifiers helps to neat up the code by removing the redundant code and putting them in function statement
+    modifier restrictedToManager() {
+        // requiring manager making sure that only manager is able use pick winner function
+        require(msg.sender == manager);
+        _;
     }
 }
